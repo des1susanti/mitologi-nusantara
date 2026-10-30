@@ -1,0 +1,13 @@
+[
+  {"gambar": "01_anoman.png", "nama": "HANOMAN", "keterangan": "", "potong": [0, 4, 0, 0], "mode": "outline", "ambang": 60, "warna_asap": "#E8ECF5"},
+  {"gambar": "02_naga.png", "nama": "NAGA BESUKIH", "keterangan": "", "warna_asap": "#D4A84F"},
+  {"gambar": "04_nyi_blorong.png", "nama": "NYI BLORONG", "keterangan": "", "area": [[0.37, 0], [0.61, 0], [0.7, 0.12], [0.76, 0.3], [0.86, 0.5], [0.93, 0.75], [1, 0.8], [1, 0.97], [0.04, 0.97], [0.04, 0.78], [0.2, 0.7], [0.27, 0.4], [0.33, 0.12]], "pasti": [[0.47, 0.01], [0.53, 0.01], [0.58, 0.06], [0.62, 0.1], [0.68, 0.16], [0.72, 0.23], [0.69, 0.29], [0.6, 0.24], [0.55, 0.2], [0.45, 0.2], [0.41, 0.31], [0.38, 0.2], [0.4, 0.08]], "warna_asap": "#2FBF5A"},
+  {"gambar": "03_garuda.png", "nama": "GARUDA", "keterangan": "", "warna_asap": "#E8402A"},
+  {"gambar": "11_banaspati.png", "nama": "BANASPATI", "keterangan": "", "ambang": 30, "warna_asap": "#FF7A1A", "isi_lubang": true},
+  {"gambar": "06_kuyang.png", "nama": "KUYANG", "keterangan": "", "potong": [0, 0, 0, 9], "warna_asap": "#B0203C"},
+  {"gambar": "05_nyi_roro_kidul.png", "nama": "NYI RORO KIDUL", "keterangan": "", "area": [[0.3, 0.0], [0.6, 0.0], [0.66, 0.13], [0.88, 0.16], [0.9, 0.36], [0.82, 0.38], [1.0, 0.44], [1.0, 0.93], [0.0, 0.93], [0.0, 0.74], [0.08, 0.7], [0.09, 0.33], [0.3, 0.28], [0.32, 0.14]], "pasti": [[[0.38, 0.0], [0.5, 0.0], [0.55, 0.08], [0.6, 0.13], [0.75, 0.2], [0.82, 0.26], [0.78, 0.33], [0.6, 0.24], [0.5, 0.2], [0.42, 0.2], [0.37, 0.14], [0.36, 0.07]], [[0.12, 0.34], [0.18, 0.34], [0.2, 0.42], [0.24, 0.42], [0.24, 0.47], [0.21, 0.47], [0.29, 0.8], [0.26, 0.81], [0.17, 0.46], [0.13, 0.4]]], "hapus_langit": true, "warna_asap": "#1FB8A0"},
+  {"gambar": "07_rangda.png", "nama": "RANGDA", "keterangan": "", "warna_asap": "#F2A31B"},
+  {"gambar": "12_genderuwo.png", "nama": "GENDERUWO", "keterangan": "", "area": [[0.25, 0.0], [0.78, 0.0], [0.86, 0.15], [0.95, 0.3], [0.97, 0.62], [0.86, 0.66], [0.72, 0.66], [0.73, 0.97], [0.3, 0.97], [0.3, 0.63], [0.18, 0.57], [0.03, 0.53], [0.05, 0.4], [0.16, 0.33], [0.2, 0.15]], "pasti": [[0.38, 0.12], [0.62, 0.12], [0.66, 0.5], [0.56, 0.82], [0.44, 0.82], [0.34, 0.5]], "warna_asap": "#7A2A1A"},
+  {"gambar": "08_ahool.png", "nama": "AHOOL", "keterangan": "", "warna_asap": "#8A4FD0"},
+  {"gambar": "09_kuda_api.png", "nama": "KUDA SEMBRANI", "keterangan": "", "batas": [0.08, 0.04, 0.02, 0.04], "hapus_terang_bawah": 0.62, "warna_asap": "#FF5A12"}
+]
