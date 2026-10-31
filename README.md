@@ -21,6 +21,7 @@ yang dikendalikan dengan gerakan tangan. Dibuat dengan Python, OpenCV, dan Media
 mitologi_hands_project/
 ├── mitologi_hands.py      program utama (jalankan ini)
 ├── image_nodes.py         pengubah gambar menjadi node
+├── gerak.py               gerakan tokoh (sayap, api, rambut, dll.)
 ├── tokoh.json             daftar tokoh: gambar, nama, keterangan, urutan
 ├── gambar/                gambar tokoh
 ├── .cache/                hasil olahan gambar (dibuat otomatis, boleh dihapus)
@@ -31,8 +32,8 @@ mitologi_hands_project/
 ## Menjalankan di VS Code (Mac)
 
 ```bash
-git clone https://github.com/des1susanti/mitologi-nusantara.git
-cd mitologi-nusantara
+git clone https://github.com/des1susanti/panggung-mitologi-nusantara.git
+cd panggung-mitologi-nusantara
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -60,6 +61,15 @@ Pengaturan tambahan per tokoh (opsional) bila latarnya ikut terbawa:
 - `"warna_asap": "#RRGGBB"` warna asap sebelum tokoh itu muncul (tanpa ini, diambil dari warna gambar).
 
 Kepekaan jepit jempol-telunjuk bisa diatur di `PINCH_CLOSE` dan `PINCH_OPEN` dalam `mitologi_hands.py`.
+
+## Gerakan tokoh
+
+Setiap tokoh bergerak sendiri dari satu gambar: sayap Garuda dan Ahool mengepak,
+Naga meliuk, api Banaspati dan surai Kuda Sembrani berkobar, rambut Kuyang berkibar, dsb.
+Pengaturannya ada di bagian `"gerak"` setiap tokoh di `tokoh.json`
+(jenis: `napas`, `goyang`, `putar`, `liuk`, `kibar`, `api`; penjelasan lengkap di `gerak.py`).
+Perbesar `"kuat"` agar gerakan lebih besar, `"laju"` agar lebih cepat.
+Hapus bagian `"gerak"` kalau tokoh ingin diam.
 
 ## Tombol
 

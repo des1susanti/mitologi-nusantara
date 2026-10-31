@@ -41,6 +41,7 @@ except ImportError:
 
 import json
 
+from gerak import Gerak
 from image_nodes import build_character
 
 CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tokoh.json")
@@ -121,6 +122,8 @@ def load_characters():
         d["sprite"], d["sprite_box"] = make_sprite(d)
         d["contour"] = np.nonzero(d["kind"] == 2)[0]
         d["smoke"] = smoke_color(c.get("warna_asap"), d)
+        d["gerak"] = Gerak(d["sprite"]["a_img"], c.get("gerak"))
+        d["terbang"] = c.get("terbang")
         chars.append(d)
         print(f"  tokoh siap: {d['name']}")
     if not chars:
@@ -484,7 +487,20 @@ class App:
     def stage_yaw(t):
         return math.sin(t * 0.5) * 0.5
 
-    def stage_matrix(self, boxM, t):
+    def stage_matrix(self, boxM, t, fig=None):
+        fly = fig.get("terbang") if fig else None
+        if fly:  # tokoh terbang berkeliling di dalam kubus (mis. naga)
+            sk = fly.get("skala", 0.62)
+            ph = fly.get("laju", 0.8) * t
+            x = fly.get("lebar", 0.22) * math.sin(ph)
+            y = fly.get("tinggi", 0.13) * math.sin(2 * ph)
+            z = fly.get("maju", 0.12) * math.cos(ph)
+            vx, vy = math.cos(ph), math.cos(2 * ph)
+            face = smoothstep(-0.35, 0.35, vx)          # 0 = hadap kiri, 1 = hadap kanan
+            turn = math.pi * face                       # berbalik arah dengan memutar badan
+            dirx = 1 - 2 * face
+            tilt = -0.28 * vy * dirx * (fly.get("tinggi", 0.13) / 0.13)
+            return boxM @ affine((x, y, z), rot_y(turn) @ rot_z(tilt), (sk, sk, sk))
         return boxM @ affine((0, math.sin(t * 1.4) * 0.02, 0), rot_y(self.stage_yaw(t)), (1, 1, 1))
 
     def draw_nodes(self, img, fig, stageM, t, alpha, scatter):
@@ -515,12 +531,16 @@ class App:
         cv2.add(img, glow, img)
         cv2.add(img, dots, img)
 
-    def sprite_frame(self, spr, yaw, t):
+    def sprite_frame(self, spr, yaw, t, gerak=None):
         """Efek 4D: paralaks menurut kedalaman + cahaya yang bergerak + kilatan menyapu."""
         h, w = spr["depth"].shape
         shift = spr["depth"] * (math.sin(yaw) * w * 0.05)
         mx = spr["xx"] - shift
         my = spr["yy"] - spr["depth"] * (math.sin(t * 0.8) * h * 0.008)
+        d = gerak.disp(t) if gerak is not None else None
+        if d is not None:  # tokoh bergerak: sayap, api, rambut, dsb (lihat gerak.py)
+            mx = mx - d[0]
+            my = my - d[1]
         col = cv2.remap(spr["col"], mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
         a_img = cv2.remap(spr["a_img"], mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
         nx = cv2.remap(spr["nx"], mx, my, cv2.INTER_LINEAR)
@@ -538,7 +558,7 @@ class App:
         return np.dstack([prem, alpha * 255]).astype(np.uint8)
 
     def draw_sprite(self, img, fig, stageM, alpha, yaw=0.0, t=0.0):
-        spr = self.sprite_frame(fig["sprite"], yaw, t)
+        spr = self.sprite_frame(fig["sprite"], yaw, t, fig.get("gerak"))
         x0, x1, yt, yb = fig["sprite_box"] * FIG_K
         Q = np.array([[x0, yt, 0], [x1, yt, 0], [x1, yb, 0], [x0, yb, 0]])
         W = Q @ stageM[:3, :3].T + stageM[:3, 3]
@@ -652,7 +672,7 @@ class App:
             self.draw_edges(img, P2, Z, "back", op)
             if self.idx >= 0 and self.char_alpha > 0.02:
                 fig = self.figs[self.idx]
-                stageM = self.stage_matrix(boxM, now)
+                stageM = self.stage_matrix(boxM, now, fig)
                 el = now - self.reveal_t0
                 ca = self.char_alpha * op
                 # tahap muncul: node berkumpul -> gambar utuh perlahan tampil
