@@ -1,4 +1,11 @@
 # Panggung Mitologi Nusantara
+![Tokoh di dalam kubus 3D](mitologi_kubus.png)
+
+## Tokoh
+
+![Sebelas tokoh mitologi Nusantara](mitologi_tokoh.png)
+
+![Tokoh bergerak](mitologi_gerak.gif)
 
 Program interaktif berbasis kamera: tokoh mitologi Nusantara muncul di dalam kubus 3D
 yang dikendalikan dengan gerakan tangan. Dibuat dengan Python, OpenCV, dan MediaPipe Hand Landmarker.
